@@ -140,7 +140,7 @@ const App = () => {
     )
     const optionArr=[];
     optionArr.push(y[0]);
-    for (let i = 1; i < 4; i++) {
+    for (let i = 1; i < e.length; i++) {
       
       optionArr.push(e[i]);
     }
@@ -153,17 +153,17 @@ const App = () => {
     setCurrChar(obj);
   };
  //console.log(currChar)
-  const scoreHandler = (props) => {
+  const scoreHandler = (e) => {
    let a= characters.filter((item)=>
     JSON.stringify(item.abilities)===JSON.stringify(currChar.abilities)
    )
    console.log(a[0].name)
-      if(a[0].name===optionArr[0].name){
+      if(a[0].name===e.currentTarget.value){
         setScore(score+1);
       }else{
         setScore(score-1);
       }
-      console.log(props.value)
+    //  console.log(props.value)
   };
   return (
     <div id="main">
