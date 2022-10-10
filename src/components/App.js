@@ -125,20 +125,46 @@ const App = () => {
     abilities: [],
     options: [],
   });
-
-  const [score, setScore] = useState(0);
-
-  const changeChar = () => {
-    
-  };
-
-  const scoreHandler = (e) => {
-   
-  };
-
   useEffect(() => {
+    changeChar(characters);
+  }, []);
+  const [score, setScore] = useState(0);
+  const changeChar = (array) => {
    
-  });
+    const randomObject = array[Math.floor(Math.random() * array.length)];
+    let e= characters.filter((item)=>
+         item.role==randomObject.role
+    )
+    let y=characters.filter((item)=>
+    JSON.stringify(item.abilities)===JSON.stringify(randomObject.abilities)
+    )
+    const optionArr=[];
+    optionArr.push(y[0]);
+    for (let i = 1; i < 4; i++) {
+      
+      optionArr.push(e[i]);
+    }
+    const obj = {
+      name: randomObject.name,
+      role: randomObject.role,
+      abilities: randomObject.abilities,
+      options:optionArr
+    };
+    setCurrChar(obj);
+  };
+ //console.log(currChar)
+  const scoreHandler = (props) => {
+   let a= characters.filter((item)=>
+    JSON.stringify(item.abilities)===JSON.stringify(currChar.abilities)
+   )
+   console.log(a[0].name)
+      if(a[0].name===optionArr[0].name){
+        setScore(score+1);
+      }else{
+        setScore(score-1);
+      }
+      console.log(props.value)
+  };
   return (
     <div id="main">
       <div className="container">
@@ -148,9 +174,9 @@ const App = () => {
           <h3>The character has the following abilities:</h3>
           <h4>Role: {currChar.role}</h4>
           {currChar.abilities.join()}
-          <div className="options">
-            {currChar.options.map((option) => (
-              <button   onClick={scoreHandler}>
+          <div className="options" >
+            {currChar.options.map((option,index) => (
+              <button   onClick={scoreHandler} id={index} value={option.name} >
                 {option.name}
               </button>
             ))}
